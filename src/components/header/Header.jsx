@@ -6,7 +6,7 @@ import { UserContext } from "../../context/User.context";
 
 function Header() {
   const { currentUser, setCurrentUser } = useContext(UserContext);
-  console.log("currntuser", currentUser);
+
 
   const signOutHandler = async () => {
     await signOutUser();

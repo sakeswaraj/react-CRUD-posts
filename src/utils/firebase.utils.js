@@ -16,8 +16,8 @@ import {
   getDocs,
   getFirestore,
   query,
+  orderBy,
   setDoc,
-  writeBatch,
 } from "firebase/firestore";
 
 // Your web app's Firebase configuration
@@ -27,7 +27,7 @@ const firebaseConfig = {
   projectId: "test-c13ea",
   storageBucket: "test-c13ea.appspot.com",
   messagingSenderId: "1040146177231",
-  appId: "1:1040146177231:web:e7543d3050acf787fe6bba"
+  appId: "1:1040146177231:web:e7543d3050acf787fe6bba",
 };
 
 // Initialize Firebase
@@ -47,32 +47,13 @@ export const signInWithGoogleRedirect = () =>
 
 export const db = getFirestore();
 
-export const addCollectionAndDocuments = async (
-  collectionKey,
-  objectsToAdd
-) => {
-  const batch = writeBatch(db);
-  const collectionRef = collection(db, collectionKey);
-
-  objectsToAdd.forEach((object) => {
-    const docRef = doc(collectionRef, object.title.toLowerCase());
-    batch.set(docRef, object);
-  });
-
-  await batch.commit();
-  console.log("done");
-};
-
-export const getCategoriesAndDocuments = async () => {
-  const collectionRef = collection(db, "collections");
-  const q = query(collectionRef);
+export const getPosts = async () => {
+  const collectionRef = collection(db, "posts");
+  const q = query(collectionRef, orderBy("created", "desc"));
 
   const querySnapshot = await getDocs(q);
-  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
-    const { title, items } = docSnapshot.data();
-    acc[title.toLowerCase()] = items;
-    return acc;
-  }, {});
+  const categoryMap = querySnapshot.docs.map((item) =>  item.data());
+  console.log("Saru", categoryMap);
 
   return categoryMap;
 };
