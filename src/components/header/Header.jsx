@@ -3,10 +3,10 @@ import "./Header.scss";
 import { Link, Outlet } from "react-router-dom";
 import { signOutUser } from "../../utils/firebase.utils";
 import { UserContext } from "../../context/User.context";
+import { FcAssistant } from "react-icons/fc";
 
 function Header() {
   const { currentUser, setCurrentUser } = useContext(UserContext);
-
 
   const signOutHandler = async () => {
     await signOutUser();
@@ -14,9 +14,12 @@ function Header() {
   return (
     <Fragment>
       <div className="navigation">
-        <Link className="logo-container" to="/">
-          arun
+        <div>
+        <Link className="logo-container nav-link" to="/">
+          <FcAssistant />
         </Link>
+        </div>
+        
         <div className="nav-links-container">
           {currentUser ? (
             <>

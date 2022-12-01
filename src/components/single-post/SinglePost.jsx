@@ -1,18 +1,27 @@
-import React from 'react'
+import React from "react";
 import "./SinglePost.scss";
 import { Link, Outlet } from "react-router-dom";
-function SinglePost({body,title,id,userId}) {
+function SinglePost({ body, title, id, userId }) {
   return (
-    <div className='post__container'>
-        <h3 className='post__container--title'>{title}</h3>
-        <p className='post__container--body'>{body}</p>
-        <p className='post__container--id'>{id}</p>
-       
+    <div className="post__container">
+      <h2 className="post__container--title">{title}</h2>
+      <h3 className="post__container--body">{body}</h3>
+      <p className="post__container--id">
+        post id : <span>{id}</span>
         <Link className="nav-link" to="/create-post">
-        <button>update</button>
-              </Link>
+          <button
+            onClick={() => {
+              localStorage.setItem("tile", title);
+              localStorage.setItem("body", body);
+              localStorage.setItem("id", id);
+            }}
+          >
+            update
+          </button>
+        </Link>
+      </p>
     </div>
-  )
+  );
 }
 
-export default SinglePost
+export default SinglePost;
