@@ -12,9 +12,9 @@ import "react-toastify/dist/ReactToastify.css";
 const CreatePost = () => {
   const { currentUser, setCurrentUser } = useContext(UserContext);
   const initialValues = {
-    title: "",
-    body: "",
-    id: "",
+    title: localStorage.getItem("title") || "",
+    body: localStorage.getItem("body") || "",
+    id: localStorage.getItem("id") || "",
   };
   const [values, setValues] = useState(initialValues);
 
@@ -46,6 +46,9 @@ const CreatePost = () => {
 
           theme: "colored",
         });
+        localStorage.removeItem("title");
+        localStorage.removeItem("body");
+        localStorage.removeItem("id");
       } else {
         toast.error("all fields are necessary", {
           position: "top-right",

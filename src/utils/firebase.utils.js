@@ -15,6 +15,7 @@ import {
   getDoc,
   getDocs,
   getFirestore,
+  deleteDoc,
   query,
   orderBy,
   setDoc,
@@ -52,10 +53,22 @@ export const getPosts = async () => {
   const q = query(collectionRef, orderBy("created", "desc"));
 
   const querySnapshot = await getDocs(q);
-  const categoryMap = querySnapshot.docs.map((item) =>  item.data());
-  console.log("Saru", categoryMap);
-
-  return categoryMap;
+  const categoryMap = querySnapshot.docs.map((item) => item.data());
+  const categoryMap1 = querySnapshot.docs.map((item) => {
+    return {
+      ...item.data(),
+      mainId: item.id,
+    };
+  });
+  console.log("sdjsvfd", categoryMap1);
+  console.log("1", categoryMap);
+  return categoryMap1;
+};
+export const deletePost = async (uid) => {
+  console.log("dle", uid);
+  console.log("ppp1", deleteDoc(doc(db, "posts", uid)));
+  console.log("ppl2", await deleteDoc(doc(db, "posts", uid)));
+  await deleteDoc(doc(db, "posts", uid));
 };
 
 export const createUserDocumentFromAuth = async (
